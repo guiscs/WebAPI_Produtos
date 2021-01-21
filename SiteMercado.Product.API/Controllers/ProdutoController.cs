@@ -73,16 +73,6 @@ namespace SiteMercado.Product.API.Controllers
             return CustomResponse();
         }
 
-        //[HttpGet("Imagem/{idProduto}")]
-        //public async Task<ActionResult<IFormFile>> GetImageByIdProd(long idProduto)
-        //{
-        //    var produto = await _produtoBusiness.GetImageByIdProd(idProduto);
-
-        //    if (produto.file == null) return NotFound();
-
-        //    return File(produto.file, produto.contentType,produto.fileName);
-        //}
-
         [HttpGet("Imagem/{idProduto}")]
         public async Task<IActionResult> GetImageByIdProd(long idProduto)
         {
@@ -90,7 +80,7 @@ namespace SiteMercado.Product.API.Controllers
 
             if (produto.file == null) return NotFound();
 
-            return CustomResponse("data:image/png;base64," + Convert.ToBase64String(produto.file));
+            return CustomResponse($"data:{produto.contentType};base64," + Convert.ToBase64String(produto.file));
         }
     }
 }

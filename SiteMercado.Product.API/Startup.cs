@@ -45,24 +45,7 @@ namespace SiteMercado.Product.API
 
             services.AddCors();
             services.AddControllers();
-
-            services.AddSwaggerGen(c =>
-            {
-
-                c.SwaggerDoc("v1",
-                    new OpenApiInfo
-                    {
-                        Title = "CRUD Produto",
-                        Version = "v1",
-                        Description = "API REST para listagem, cadastro, edição e exclusão de produtos",
-                        Contact = new OpenApiContact
-                        {
-                            Name = "Guilherme M Pires",
-                            Url = new Uri("https://github.com/guiscs")
-                        }
-                    });
-            });
-
+            services.ConfigureServiceSwagger();
             services.ResolveDependencies();
         }
 
@@ -73,18 +56,13 @@ namespace SiteMercado.Product.API
                 app.UseDeveloperExceptionPage();
             }
 
-            // Ativando middlewares para uso do Swagger
-            app.UseSwagger();
-            app.UseSwaggerUI(c =>
-            {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "CRUD Produtos");
-            });
-
             var supportedCultures = new[]
             {
                     new CultureInfo("en-US"),
                     new CultureInfo("es"),
             };
+
+            app.ConfigureSwagger();
 
             app.UseRequestLocalization(new RequestLocalizationOptions
             {
